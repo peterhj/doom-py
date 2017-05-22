@@ -1,9 +1,17 @@
 #include "ViZDoomDefines.h"
+#include "ViZDoomExceptions.h"
 #include "ViZDoomGame.h"
 
 #include <stdint.h>
 
 extern "C" {
+
+enum DoomGameStatus {
+  DOOM_GAME_STATUS_Success = 0,
+  DOOM_GAME_STATUS_Failure,
+  DOOM_GAME_STATUS_VizdoomUnexpectedExitException,
+  DOOM_GAME_STATUS_UnknownException,
+};
 
 vizdoom::DoomGame *DoomGame_new() {
   return new vizdoom::DoomGame();
@@ -13,8 +21,20 @@ void DoomGame_delete(vizdoom::DoomGame *game) {
   delete game;
 }
 
-void DoomGame_init(vizdoom::DoomGame *game) {
-  game->init();
+DoomGameStatus DoomGame_init(vizdoom::DoomGame *game) {
+  try {
+    if (game->init()) {
+      return DOOM_GAME_STATUS_Success;
+    } else {
+      return DOOM_GAME_STATUS_Failure;
+    }
+  }
+  catch (vizdoom::ViZDoomUnexpectedExitException e) {
+    return DOOM_GAME_STATUS_VizdoomUnexpectedExitException;
+  }
+  catch (...) {
+    return DOOM_GAME_STATUS_UnknownException;
+  }
 }
 
 void DoomGame_close(vizdoom::DoomGame *game) {

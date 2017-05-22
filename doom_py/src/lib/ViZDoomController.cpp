@@ -867,9 +867,9 @@ namespace vizdoom {
             this->doomArgs.push_back(this->filePath);
         }
 
-        this->doomArgs.push_back("-config");
+        /*this->doomArgs.push_back("-config");
         if (this->configPath.length() != 0) this->doomArgs.push_back(this->configPath);
-        else this->doomArgs.push_back("vizdoom.ini");
+        else this->doomArgs.push_back("vizdoom.ini");*/
 
         if(this->useRngSeed) {
             this->doomArgs.push_back("-rngseed");
