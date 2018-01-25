@@ -168,7 +168,7 @@ void ViZDoom_ScreenInit() {
 
     if((*vizdoom_screen_format==VIZDOOM_SCREEN_CBCGCRDB
        ||*vizdoom_screen_format==VIZDOOM_SCREEN_CRCGCBDB
-       ||*vizdoom_screen_format==VIZDOOM_SCREEN_DEPTH_BUFFER8) && !*vizdoom_nocheat) {
+       ||*vizdoom_screen_format==VIZDOOM_SCREEN_DEPTH_BUFFER8) /*&& !*vizdoom_nocheat*/) {
         depthMap = new ViZDoomDepthBuffer(vizdoomScreenWidth, vizdoomScreenHeight);
     }
 }
@@ -196,7 +196,7 @@ void ViZDoom_ScreenUpdate(){
                     vizdoomScreen[i] = 0.21 * palette[buffer[i]].r + 0.72 * palette[buffer[i]].g + 0.07 *palette[buffer[i]].b;
                 }
             }
-            else if(*vizdoom_screen_format == VIZDOOM_SCREEN_DEPTH_BUFFER8 && !*vizdoom_nocheat){
+            else if(*vizdoom_screen_format == VIZDOOM_SCREEN_DEPTH_BUFFER8 /*&& !*vizdoom_nocheat*/){
                 memcpy(vizdoomScreen, depthMap->getBuffer(), depthMap->getBufferSize());
             }
             else {
@@ -209,7 +209,7 @@ void ViZDoom_ScreenUpdate(){
                     //if(alpha) vizdoomScreen[pos + aPos] = palette[buffer[i]].a;
                 }
 
-                if((*vizdoom_screen_format == VIZDOOM_SCREEN_CRCGCBDB || *vizdoom_screen_format == VIZDOOM_SCREEN_CBCGCRDB) && !*vizdoom_nocheat){
+                if((*vizdoom_screen_format == VIZDOOM_SCREEN_CRCGCBDB || *vizdoom_screen_format == VIZDOOM_SCREEN_CBCGCRDB) /*&& !*vizdoom_nocheat*/){
                     memcpy(vizdoomScreen+3*bufferSize, depthMap->getBuffer(), depthMap->getBufferSize());
                 }
             }

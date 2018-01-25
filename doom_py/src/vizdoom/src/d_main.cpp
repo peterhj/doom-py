@@ -817,6 +817,12 @@ void D_Display ()
 				V_RefreshViewBorder ();
 			}
 
+                        // HACK(peterhj): see: <https://github.com/mwydmuch/ViZDoom/commit/b14e891531950cbe33186babe427f9fef7d2d816>.
+                        if (depthMap != NULL) {
+                          depthMap->setActualDepth(0);
+                          depthMap->lock();
+                        }
+
 			if (hud_althud && viewheight == SCREENHEIGHT && screenblocks > 10)
 			{
 				StatusBar->DrawBottomStuff (HUD_AltHud);
@@ -838,6 +844,11 @@ void D_Display ()
 				StatusBar->Draw (HUD_StatusBar);
 				StatusBar->DrawTopStuff (HUD_StatusBar);
 			}
+
+                        if (depthMap != NULL) {
+                          depthMap->unlock();
+                        }
+
 			CT_Drawer ();
 			break;
 
